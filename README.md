@@ -11,12 +11,12 @@ adjustvb [-b num] [-i num] [-d num] [-h]
 
 **-h**          
 &nbsp;&nbsp;&nbsp;查看帮助<br />          
-**-b** *brightLevel*         
-&nbsp;&nbsp;&nbsp;将屏幕的亮度调整到 *brightLevel* 级别<br />           
-**-i** *num*            
-&nbsp;&nbsp;&nbsp;将音量增大 *num*%<br />        
-**-d** *num*           
-&nbsp;&nbsp;&nbsp;将音量减小 *num*%<br />           
+**-b** <u>*brightLevel*</u>         
+&nbsp;&nbsp;&nbsp;将屏幕的亮度调整到 <u>*brightLevel*</u> 级别<br />           
+**-i** <u>*num*</u>            
+&nbsp;&nbsp;&nbsp;将音量增大 <u>*num*</u>%<br />        
+**-d** <u>*num*</u>           
+&nbsp;&nbsp;&nbsp;将音量减小 <u>*num*</u>%<br />           
 
 
 ## 使用前的一些工作
