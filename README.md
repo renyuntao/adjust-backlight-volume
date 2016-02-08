@@ -18,12 +18,19 @@ adjustvb [-b num] [-i num] [-d num] [-h]
 **-d** *num*           
 &nbsp;&nbsp;&nbsp;将音量减小 *num*%<br />           
 
+
 ## 使用前的一些工作
 
+&nbsp;&nbsp;&nbsp;该程序的运行需要用到系统中的文件 `brightness`，由于不同的机器上该文件的位置不同，为了让该程序能在你的机器上运行，你应该在你的系统的 `/sys/class/backlight/` 目录下查找 `brightness` 文件，并用该文件所在目录的绝对路径替换 `adjustvb` 文件中的 `/paht/to/directory/brightness/in/`,用 `brightness` 文件在你的系统中的绝对路径替换 `adjustvb` 文件中的 `/path/to/brightness`.             
+另外，用你的当前用户的密码替换 `adjustvb` 文件中的 `password`.          
+
+修改完毕后，运行如下命令:          
+
 ```bash
-$ chmod u+x adjustvb
-$ mv -v adjustvb /usr/bin/
+$ make
 ```
+
+之后根据提示输入用户密码即可。            
 
 ## 示例           
 
@@ -53,6 +60,3 @@ $ adjustvb -i 5
 $ adjustvb -d 5
 ```
 
-## 注意          
-&nbsp;&nbsp;&nbsp;该程序的运行需要用到系统中的文件 `brightness`，由于不同的机器上该文件的位置不同，为了让该程序能在你的机器上运行，你应该在你的系统的 `/sys/class/backlight/` 目录下查找 `brightness` 文件，并用该文件所在目录的绝对路径替换 `adjustvb` 文件中的 `/paht/to/directory/brightness/in/`,用 `brightness` 文件在你的系统中的绝对路径替换 `adjustvb` 文件中的 `/path/to/brightness`.             
-另外，用你的当前用户的密码替换 `adjustvb` 文件中的 `password`. 
