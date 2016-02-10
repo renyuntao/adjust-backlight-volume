@@ -9,8 +9,8 @@ function adjustBright()
 	echo "password" | sudo -kS  cp /path/to/brightness .  
 	sed -i "s/[0-9]/${1}/" brightness
 	echo "password" | sudo -kS cp brightness /path/to/directory/brightness/in/
+	rm brightness
 	echo
-	#clear
 }
 
 # Increase the volume
