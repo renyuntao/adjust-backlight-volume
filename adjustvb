@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Maintainer: YtRen <rytubuntulinux@gmail.com>
-# Date: 2016-02-08
+# Create Date: 2016-02-08
+# Update: 2016-02-11
 # Function: Adjust backlight and volume of Ubuntu Linux
 
 # Adjust the backlight
@@ -8,9 +9,9 @@ function adjustBright()
 {
 	echo "password" | sudo -kS  cp /path/to/brightness .  
 	sed -i "s/[0-9]/${1}/" brightness
-	echo "password" | sudo -kS cp brightness /path/to/directory/brightness/in/
+	echo "password" | sudo -kS cp brightness /paht/to/directory/brightness/in/
 	rm brightness
-	echo
+	echo 
 }
 
 # Increase the volume
@@ -25,6 +26,24 @@ function decVolume()
 	amixer -q set Master $1%- 
 }
 
+# Display the HELP
+function showHelp()
+{
+		echo -e "\e[1m================================= \e[1mHELP ===================================\e[0m"
+		# Name
+		echo -e "\e[1mNAME\e[0m\n   adjustvb - Adjust backlight and volume of Ubuntu Linux\n"
+
+		# Synopsis
+		echo -e "\e[1mSYNOPSIS\n\e[0m   adjustvb [\e[1m-b\e[0m \e[3m\e[4mnum\e[0m] [\e[1m-i\e[0m \e[3m\e[4mnum\e[0m] \
+[\e[1m-d\e[0m \e[3m\e[4mnum\e[0m] [\e[1m-h\e[0m]\n"
+
+		# Options
+		echo -e "\e[1mOptions\e[0m\n\e[1m   -h\e[0m\n      See help\n\n\e[1m   -b\e[0m\e[3m \e[4mbrightLevel\e[0m\n      Adjust the backlight to \e[3m\e[4mbrightLevel\e[0m\
+				 \n\n\e[1m   -i\e[0m\e[3m \e[4mnum\e[0m\n      Increase volume by \e[3m\e[4mnum\e[0m percent\n\n\e[1m   -d\e[0m \e[3m\e[4mnum\e[0m\n      Decrease volume by \e[3m\e[4mnum\e[0m percent"
+		echo -e "\e[1m==========================================================================\e[0m"
+	
+}
+
 haveChoice=false
 
 # Parse the option
@@ -35,51 +54,37 @@ do
 		h)
 			haveChoice=true
 			clear
-			echo -e "\e[1m================================= \e[1mHELP ===================================\e[0m"
-			# Name
-			echo -e "\e[1mNAME\e[0m\n   adjustvb - Adjust backlight and volume of Ubuntu Linux\n"
-
-			# Synopsis
-			echo -e "\e[1mSYNOPSIS\n\e[0m   adjustvb [\e[1m-b\e[0m \e[3m\e[4mnum\e[0m] [\e[1m-i\e[0m \e[3m\e[4mnum\e[0m] \
-[\e[1m-d\e[0m \e[3m\e[4mnum\e[0m] [\e[1m-h\e[0m]\n"
-
-			# Options
-			echo -e "\e[1mOptions\e[0m\n\e[1m   -h\e[0m\n      See help\n\n\e[1m   -b\e[0m\e[3m \e[4mbrightLevel\e[0m\n      Adjust the backlight to \e[3m\e[4mbrightLevel\e[0m\
-					 \n\n\e[1m   -i\e[0m\e[3m \e[4mnum\e[0m\n      Increase volume by \e[3m\e[4mnum\e[0m percent\n\n\e[1m   -d\e[0m \e[3m\e[4mnum\e[0m\n      Decrease volume by \e[3m\e[4mnum\e[0m percent"
-			echo -e "\e[1m==========================================================================\e[0m"
-			break
+			showHelp
 			;;
 
 		# Control the backlight
 		b)
 			haveChoice=true
 			adjustBright $OPTARG
-			break
 			;;
 
 		# Increase the volume
 		i)
 			haveChoice=true
 			addVolume $OPTARG
-			break
 			;;
 
 		# Decrease the volume
 		d)
 			haveChoice=true
 			decVolume $OPTARG
-			break
 			;;
 
 		# Error
 		?)
 			haveChoice=true
 			echo -e "Error: Invalid option.\nUse\n\n  \e[1m$ adjust.sh -h\e[0m \n\nfor more information."
-			break
+			exit 1
 			;;
 	esac
 done
 
+# If no option(s)
 if [ $haveChoice == false ]
 then
 	echo -e "Too few option.\nUse\n\n   \e[1m$ adjustvb -h\e[0m\n\nfor more information"
