@@ -2,7 +2,7 @@
 # Maintainer: YtRen <rytubuntulinux@gmail.com>
 # Create Date: 2016-02-08
 # Update: 2017-05-10
-# Function: Adjust screen backlight and volume in Ubuntu Linux
+# Function: Adjust screen backlight and volume of Ubuntu Linux
 
 passwdFile="$HOME/.adjustvb"
 
@@ -35,6 +35,16 @@ function adjustBright()
 	sudo -k
 }
 
+# Get current bright level
+function getBrightLevel()
+{
+	curLevel=`cat /sys/class/backlight/intel_backlight/brightness`
+	maxLevel=`cat /sys/class/backlight/intel_backlight/max_brightness`
+
+	echo "Current bright level: $curLevel"
+	echo "Max bright level: $maxLevel"
+}
+
 # Increase the volume
 function addVolume()
 {
@@ -57,11 +67,11 @@ function showHelp()
 
 		# Synopsis
 		echo -e "\e[1mSYNOPSIS\n\e[0m   adjustvb [\e[1m-b\e[0m \e[3m\e[4mnum\e[0m] [\e[1m-i\e[0m \e[3m\e[4mnum\e[0m] \
-[\e[1m-d\e[0m \e[3m\e[4mnum\e[0m] [\e[1m-h\e[0m]\n"
+[\e[1m-d\e[0m \e[3m\e[4mnum\e[0m] [\e[1m-g\e[0m] [\e[1m-h\e[0m]\n"
 
 		# Options
-		echo -e "\e[1mOptions\e[0m\n\e[1m   -h\e[0m\n      See help\n\n\e[1m   -b\e[0m\e[3m \e[4mbrightLevel\e[0m\n      Adjust the backlight to \e[3m\e[4mbrightLevel\e[0m\n      \e[3m\e[4mbrightLevel\e[0m range: 0~$max_brightness\
-				 \n\n\e[1m   -i\e[0m\e[3m \e[4mnum\e[0m\n      Increase volume by \e[3m\e[4mnum\e[0m percent\n\n\e[1m   -d\e[0m \e[3m\e[4mnum\e[0m\n      Decrease volume by \e[3m\e[4mnum\e[0m percent"
+		echo -e "\e[1mOptions\e[0m\n\e[1m   -h\e[0m\n      See help\n\n\e[1m   -g\e[0m\n      Get current bright level\n\n\e[1m   -b \e[0m\e[3m\e[4mbrightLevel\e[0m\n      Adjust the backlight to \e[3m\e[4mbrightLevel\e[0m\n      \e[3m\e[4mbrightLevel\e[0m range: 0~$max_brightness\
+				 \n\n\e[1m   -i \e[0m\e[3m\e[4mnum\e[0m\n      Increase volume by \e[3m\e[4mnum\e[0m percent\n\n\e[1m   -d\e[0m \e[3m\e[4mnum\e[0m\n      Decrease volume by \e[3m\e[4mnum\e[0m percent"
 		echo -e "\e[1m==========================================================================\e[0m"
 	
 }
@@ -69,7 +79,7 @@ function showHelp()
 haveChoice=false
 
 # Parse the option
-while getopts "hb:i:d:" opt
+while getopts "hgb:i:d:" opt
 do
 	case $opt in
 		# Help
@@ -77,8 +87,15 @@ do
 			haveChoice=true
 			clear
 			showHelp
+			break
 			;;
 
+		# Get current bright level
+		g)
+			haveChoice=true
+			getBrightLevel
+			break
+			;;
 		# Control the backlight
 		b)
 			haveChoice=true
