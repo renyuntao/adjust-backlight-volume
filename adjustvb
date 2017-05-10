@@ -1,17 +1,38 @@
 #!/usr/bin/env bash
 # Maintainer: YtRen <rytubuntulinux@gmail.com>
 # Create Date: 2016-02-08
-# Update: 2016-02-11
-# Function: Adjust backlight and volume of Ubuntu Linux
+# Update: 2017-05-10
+# Function: Adjust screen backlight and volume in Ubuntu Linux
+
+passwdFile="$HOME/.adjustvb"
 
 # Adjust the backlight
 function adjustBright()
 {
-	echo "password" | sudo -kS  cp /path/to/brightness .  
-	sed -i "s/[0-9]/${1}/" brightness
-	echo "password" | sudo -kS cp brightness /paht/to/directory/brightness/in/
-	rm brightness
-	echo 
+	if [ -s $passwdFile ]
+	then
+		passwd=`cat $passwdFile`
+	else
+		read -s -p "password for $USER: " passwd
+
+		# Check if the password is correct
+		echo $passwd | sudo -kS true &> /dev/null
+		# password is correct
+		if [ "$?" == "0" ]
+		then
+			echo $passwd > $passwdFile
+		# password is incorrect
+		else
+			echo "Password is incorrect!"
+			exit 1
+		fi
+	fi
+
+	echo $passwd | sudo -S cp /sys/class/backlight/intel_backlight/brightness $HOME &> /dev/null
+	sudo sed -ri "s/[0-9]+/$1/" $HOME/brightness
+	sudo cp $HOME/brightness /sys/class/backlight/intel_backlight/ 
+	sudo rm $HOME/brightness
+	sudo -k
 }
 
 # Increase the volume
@@ -29,6 +50,7 @@ function decVolume()
 # Display the HELP
 function showHelp()
 {
+		max_brightness=`cat /sys/class/backlight/intel_backlight/max_brightness`
 		echo -e "\e[1m================================= \e[1mHELP ===================================\e[0m"
 		# Name
 		echo -e "\e[1mNAME\e[0m\n   adjustvb - Adjust backlight and volume of Ubuntu Linux\n"
@@ -38,7 +60,7 @@ function showHelp()
 [\e[1m-d\e[0m \e[3m\e[4mnum\e[0m] [\e[1m-h\e[0m]\n"
 
 		# Options
-		echo -e "\e[1mOptions\e[0m\n\e[1m   -h\e[0m\n      See help\n\n\e[1m   -b\e[0m\e[3m \e[4mbrightLevel\e[0m\n      Adjust the backlight to \e[3m\e[4mbrightLevel\e[0m\
+		echo -e "\e[1mOptions\e[0m\n\e[1m   -h\e[0m\n      See help\n\n\e[1m   -b\e[0m\e[3m \e[4mbrightLevel\e[0m\n      Adjust the backlight to \e[3m\e[4mbrightLevel\e[0m\n      \e[3m\e[4mbrightLevel\e[0m range: 0~$max_brightness\
 				 \n\n\e[1m   -i\e[0m\e[3m \e[4mnum\e[0m\n      Increase volume by \e[3m\e[4mnum\e[0m percent\n\n\e[1m   -d\e[0m \e[3m\e[4mnum\e[0m\n      Decrease volume by \e[3m\e[4mnum\e[0m percent"
 		echo -e "\e[1m==========================================================================\e[0m"
 	

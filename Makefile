@@ -1,3 +1,3 @@
-prepare:   
+install:   
 	chmod u+x adjustvb
-	sudo -Sk cp -v ./adjustvb /usr/bin/
+	sudo cp -v ./adjustvb /usr/local/bin
