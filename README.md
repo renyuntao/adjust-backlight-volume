@@ -16,7 +16,7 @@ Ubuntu 14.04, Ubuntu 16.04 等系统
 **-h**          
 &nbsp;&nbsp;&nbsp;查看帮助<br />          
 **-g**          
-&nbsp;&nbsp;&nbsp;获取当前的 <u>*brightLevel*</u> 值<br />          
+&nbsp;&nbsp;&nbsp;获取当前的 <u>*brightLevel*</u> 值, 即屏幕亮度值<br />          
 **-b** <u>*brightLevel*</u>         
 &nbsp;&nbsp;&nbsp;将屏幕的亮度调整到 <u>*brightLevel*</u> 级别       
 &nbsp;&nbsp;&nbsp;<u>*brightLevel*</u> 的值是从0开始的正整数，其最大值可以查看系统中的
